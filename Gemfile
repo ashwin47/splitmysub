@@ -60,7 +60,7 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "inertia_rails", "~> 3.8"
+gem "inertia_rails", "~> 3.9"
 
 gem "vite_rails", "~> 3.0"
 
