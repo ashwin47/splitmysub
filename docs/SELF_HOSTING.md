@@ -335,6 +335,73 @@ RAILS_ENV=production rails runner "TestMailer.test_email('your-email@example.com
 
 ---
 
+## 🔔 Automated Reminder System
+
+### How Reminders Work (No Cron Required!)
+
+SplitMySub uses **SolidQueue** with recurring jobs instead of traditional cron jobs. This is perfect for containerized deployments and requires **zero additional configuration**.
+
+#### Automatic Scheduling
+
+The following jobs run automatically every day:
+
+```yaml
+# Daily at 9 AM - Send payment reminders
+daily_reminder_processor:
+  class: DailyReminderProcessorJob
+  schedule: every day at 9am
+
+# Daily at 1 AM - Generate new billing cycles  
+billing_cycle_generator:
+  class: BillingCycleGeneratorJob
+  schedule: every day at 1am
+
+# Daily at 2 AM - Archive old billing cycles
+billing_cycle_archiver:
+  class: BillingCycleArchiverJob
+  schedule: every day at 2am
+```
+
+#### How It Works
+
+1. **SolidQueue** runs inside your Rails app (no separate process needed)
+2. **Recurring jobs** are configured in `config/recurring.yml`
+3. **Background processing** handles email and Telegram notifications
+4. **Automatic retries** for failed jobs
+5. **Job monitoring** via SolidQueue dashboard
+
+#### Manual Reminder Testing
+
+```bash
+# Test reminder system
+docker-compose exec web rails reminders:test[PROJECT_ID]
+
+# Process reminders manually
+docker-compose exec web rails reminders:process
+
+# View reminder statistics
+docker-compose exec web rails reminders:stats
+
+# Schedule next reminder batch
+docker-compose exec web rails reminders:schedule_daily
+```
+
+#### Reminder Types
+
+- **Gentle Reminder**: 7 days before due date
+- **Standard Reminder**: 3 days before due date  
+- **Urgent Reminder**: 1 day before due date
+- **Final Notice**: On due date
+- **Overdue Notice**: 3 days after due date
+
+#### Notification Methods
+
+- **Email**: Always sent (if email configured)
+- **Telegram**: Sent if user has linked Telegram account
+- **Dashboard Indicators**: Overdue/due soon payments visible on dashboard and upcoming payments page
+
+---
+
 ## 🔄 Maintenance and Updates
 
 ### Regular Maintenance Tasks

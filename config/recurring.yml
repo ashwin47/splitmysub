@@ -1,10 +1,31 @@
-# production:
-#   periodic_cleanup:
-#     class: CleanSoftDeletedRecordsJob
-#     queue: background
-#     args: [ 1000, { batch_size: 500 } ]
-#     schedule: every hour
-#   periodic_command:
-#     command: "SoftDeletedRecord.due.delete_all"
-#     priority: 2
-#     schedule: at 5am every day
+production:
+  daily_reminder_processor:
+    class: DailyReminderProcessorJob
+    queue: default
+    schedule: every day at 9am
+  
+  billing_cycle_generator:
+    class: BillingCycleGeneratorJob
+    queue: default
+    schedule: every day at 1am
+    
+  billing_cycle_archiver:
+    class: BillingCycleArchiverJob
+    queue: default
+    schedule: every day at 2am
+
+development:
+  daily_reminder_processor:
+    class: DailyReminderProcessorJob
+    queue: default
+    schedule: every day at 9am
+    
+  billing_cycle_generator:
+    class: BillingCycleGeneratorJob
+    queue: default
+    schedule: every day at 1am
+    
+  billing_cycle_archiver:
+    class: BillingCycleArchiverJob
+    queue: default
+    schedule: every day at 2am

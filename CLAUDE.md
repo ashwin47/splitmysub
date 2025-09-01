@@ -33,7 +33,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Admin Tasks
 - `bin/rails "invitations:cleanup"` - Clean up expired invitations
-- `bin/rails "reminders:process"` - Send daily payment reminders
+- `bin/rails "reminders:process"` - Send daily payment reminders (runs automatically via SolidQueue)
+- `bin/rails "reminders:stats"` - Show reminder system statistics
+- `bin/rails "reminders:test[project_id]"` - Test reminder system for a specific project
 
 ### Telegram Bot
 - `bin/rails telegram:setup_webhook` - Configure webhook for development/production

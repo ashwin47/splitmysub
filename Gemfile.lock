@@ -462,7 +462,7 @@ DEPENDENCIES
   debug
   dotenv-rails
   image_processing (~> 1.2)
-  inertia_rails (~> 3.9)
+  inertia_rails
   jbuilder
   js-routes (~> 2.3)
   kamal
