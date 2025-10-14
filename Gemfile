@@ -67,7 +67,7 @@ gem "kaminari", "~> 1.2"
 gem "csv", "~> 3.3"
 
 # Rate limiting and attack protection
-gem "rack-attack", "~> 6.7"
+gem "rack-attack", "~> 6.8"
 
 # Load environment variables from .env files
 gem "dotenv-rails", groups: [ :development, :test ]
